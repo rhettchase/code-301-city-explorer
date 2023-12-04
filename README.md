@@ -19,3 +19,12 @@
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+
+## Time Estimate
+
+### Locations Latitude/Longitude Feature
+
+Estimate of time needed to complete: 1 hr
+Start time: 2 pm
+Finish time: 3:30 pm
+Actual time needed to complete: 1.5 hrs
