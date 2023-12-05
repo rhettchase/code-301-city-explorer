@@ -35,3 +35,10 @@ Estimate of time needed to complete: 1 hr
 Start time: 4 pm
 Finish time: 5 pm
 Actual time needed to complete: 1 hr
+
+### Error Feature
+
+Estimate of time needed to complete: 45 min
+Start time: 5:10 pm
+Finish time: 6:10 pm
+Actual time needed to complete: 1 hr
