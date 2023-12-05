@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&family=Righteous&family=Roboto:wght@400;900&display=swap');
+
+.body {
+    font-family: 'Montserrat', 'Roboto';
+}
+
+.form {
+    margin: 2rem;
+}
+
+
+header {
+    background-color: cornflowerblue;
+    font-weight: 700;
+}
+
+Form.Group {
+    margin: 2rem;
+}

@@ -12,16 +12,16 @@ export default function CityForm(props) {
 //   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className='form'>
       {/* <Form.Label>Region</Form.Label>
       <Form.Select onChange={handleSelect}>
         <option value='US'>US</option>
         <option value='EU'>EU</option>
       </Form.Select> */}
       <Form.Group className='mb-3'>
-        <Form.Label>City</Form.Label>
-        <Form.Control onChange={props.updateQuery} placeholder='Enter city' />
-        <Form.Text>Enter city to find latitude and longitude</Form.Text>
+        <Form.Label className='mb-3'>City</Form.Label>
+        <Form.Control onChange={props.updateQuery} placeholder='Enter city' className='mb-2'/>
+        <Form.Text >Enter city to find latitude and longitude</Form.Text>
       </Form.Group>
 
       <Button variant='primary' type='submit'>
