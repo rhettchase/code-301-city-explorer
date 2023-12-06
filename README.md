@@ -2,7 +2,7 @@
 
 **Author**: Rhett Chase
 
-**Version**: 1.0.0 
+**Version**: 1.0.1
 <!-- (increment the patch/fix version number if you make more commits past your first submission) -->
 
 ## Overview
@@ -10,6 +10,7 @@
 The City Explorer application uses a form to capture user input of `city` to return the city's latitude, longitude, and a map of the city. The app also shares information on any error if the application is unable to render a result. The user can use this message if something goes wrong so they know they need to make any changes or try again in a different manner.
 
 ![Data Flow](src/assets/data-flow.png)
+[Deployed Site](https://city-explorer-rhett.netlify.app)
 
 ## Getting Started
 
@@ -37,7 +38,8 @@ Run the following dependencies
 
 01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
 
-12-04-2023 9:36pm - The application now features a fully operational React.js frontend, integrating with the LocationIQ API to retrieve location data. A specific functionality has been implemented to handle requests for the 'location' resource and renders latitude, longitude and map based on a city input
+- 12-04-2023 9:36pm - The application now features a fully operational React.js frontend, integrating with the LocationIQ API to retrieve location data. A specific functionality has been implemented to handle requests for the 'location' resource and renders latitude, longitude and map based on a city input
+- 12-05-2023 10:00pm - The application now pulls from a locally hosted **weather api** to pull static weather forecast data. A specific functionality has been implemented to handle requests for the 'weather' resource and renders weather forecast based on a city input
 
 ## Credit and Collaborations
 
