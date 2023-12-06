@@ -35,9 +35,7 @@ export default function App() {
       if (error.response) {
         // The request was made, but the server responded with a status code outside the 2xx range
         const { status } = error.response;
-        setError(
-          `Data Error - Status Code: ${status}\nMessage: ${error.message}`
-        );
+        setError(`Data Error - Status Code: ${status}`);
       } else if (error.request) {
         // The request was made but no response was received
         setError('Fetch Error: No response received');
