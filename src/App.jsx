@@ -66,6 +66,7 @@ export default function App() {
       } catch (error) {
         // Handle errors if needed
         console.error('Error fetching weather data:', error);
+        setForecast([]); // Set forecast to an empty array in case of an error
       }
     }
   }
@@ -87,10 +88,7 @@ export default function App() {
         longitude={longitude}
         apiKey={API_KEY}
       />
-      <Weather
-        location={location}
-        forecast={forecast}
-      />
+      <Weather location={location} forecast={forecast} />
     </section>
   );
 }
