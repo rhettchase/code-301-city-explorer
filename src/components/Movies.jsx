@@ -1,8 +1,11 @@
 import Card from 'react-bootstrap/Card';
 
-export default function Movies( {movies} ) {
+export default function Movies( {movies, location} ) {
   return (
-    <div>
+    <div className='movies'>
+        {movies.length > 0 && (
+        <h2>Movies with {location.display_name} in the name:</h2>
+      )}
       {movies.map((movie, index) => (
         <Card key={index} style={{ width: '18rem' }}>
           <Card.Img variant='top' src={movie.image_url} alt={movie.title} />

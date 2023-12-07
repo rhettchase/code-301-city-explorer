@@ -103,7 +103,7 @@ export default function App() {
         apiKey={API_KEY}
       />
       <Weather location={location} forecast={forecast} />
-      <Movies movies={movies}/>
+      <Movies movies={movies} location={location}/>
     </section>
   );
 }
