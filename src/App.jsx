@@ -5,12 +5,12 @@ import Header from './components/Header';
 import CityForm from './components/CityForm';
 import RenderLocation from './components/RenderLocation';
 import Weather from './components/Weather';
+import Movies from './components/Movies'
 import HandleError from './components/HandleError';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 const API_KEY = import.meta.env.VITE_API_KEY;
 const weatherAPI = import.meta.env.VITE_API_URL;
-const MOVIE_API_KEY = import.meta.env.VITE_MOVIE_API_KEY;
 
 export default function App() {
   const [location, setLocation] = useState({ display_name: '' });
@@ -19,7 +19,7 @@ export default function App() {
   const [longitude, setLongitude] = useState('');
   const [error, setError] = useState(null);
   const [forecast, setForecast] = useState([]);
-  const [movies, setMovies] = useState('');
+  const [movies, setMovies] = useState([]);
 
   async function getLocation() {
     const locationAPI = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${searchQuery}&format=json`;
@@ -52,10 +52,10 @@ export default function App() {
   async function getMovies() {
     if (location) {
       try {
-        const movieAPIurl = `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&api_key=${MOVIE_API_KEY}`;
+        const movieAPIurl = `https://city-explorer-api-7n8z.onrender.com/movie?searchQuery=${searchQuery}`;
         const movieResponse = await axios.get(movieAPIurl);
-        setMovies(movieResponse.data.results);
-        console.log(movieResponse.data.results);
+        setMovies(movieResponse.data);
+        console.log(movieResponse.data);
       } catch (error) {
         console.log('Error fetching movie data:', error)
       }
@@ -103,6 +103,7 @@ export default function App() {
         apiKey={API_KEY}
       />
       <Weather location={location} forecast={forecast} />
+      <Movies movies={movies}/>
     </section>
   );
 }
