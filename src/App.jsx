@@ -9,6 +9,8 @@ import HandleError from './components/HandleError';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 const API_KEY = import.meta.env.VITE_API_KEY;
+const weatherAPI = import.meta.env.VITE_API_URL;
+const MOVIE_API_KEY = import.meta.env.VITE_MOVIE_API_KEY;
 
 export default function App() {
   const [location, setLocation] = useState({ display_name: '' });
@@ -17,12 +19,12 @@ export default function App() {
   const [longitude, setLongitude] = useState('');
   const [error, setError] = useState(null);
   const [forecast, setForecast] = useState([]);
-  // const [region, setRegion] = useState('');
+  const [movies, setMovies] = useState('');
 
   async function getLocation() {
-    const API = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${searchQuery}&format=json`;
+    const locationAPI = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${searchQuery}&format=json`;
     try {
-      const response = await axios.get(API);
+      const response = await axios.get(locationAPI);
       const locationObj = response.data[0];
       setLocation(locationObj);
       setLatitude(locationObj.lat);
@@ -30,7 +32,8 @@ export default function App() {
       console.log(locationObj);
       setError(null); // Clear any previous errors
       // Call getWeather after successfully fetching the location
-      getWeather();
+      await getWeather();
+      getMovies();
     } catch (error) {
       if (error.response) {
         // The request was made, but the server responded with a status code outside the 2xx range
@@ -46,6 +49,19 @@ export default function App() {
     }
   }
 
+  async function getMovies() {
+    if (location) {
+      try {
+        const movieAPIurl = `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&api_key=${MOVIE_API_KEY}`;
+        const movieResponse = await axios.get(movieAPIurl);
+        setMovies(movieResponse.data.results);
+        console.log(movieResponse.data.results);
+      } catch (error) {
+        console.log('Error fetching movie data:', error)
+      }
+    }
+  }
+
   useEffect(() => {
     // Use useEffect to call getWeather when latitude and longitude are updated
     if (latitude && longitude) {
@@ -56,9 +72,10 @@ export default function App() {
   async function getWeather() {
     // Check if latitude and longitude are not empty before making the request
     if (latitude && longitude) {
-      const weatherAPI = `http://localhost:3001/weather?lat=${latitude}&lon=${longitude}&searchQuery=${searchQuery}`;
+      
       try {
-        const response = await axios.get(weatherAPI);
+        const url = `${weatherAPI}/weather`;
+        const response = await axios.get(url, { params: { lat: latitude, lon: longitude} } );
         setForecast(response.data);
         console.log(response.data); // Log the data received from the API
       } catch (error) {
@@ -68,7 +85,6 @@ export default function App() {
       }
     }
   }
-  // http://localhost:3001/weather?lat=31.95&lon=35.91&searchQuery=Amman
   function updateQuery(event) {
     setSearchQuery(event.target.value);
   }
