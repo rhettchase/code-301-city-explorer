@@ -5,7 +5,7 @@ import Header from './components/Header';
 import CityForm from './components/CityForm';
 import RenderLocation from './components/RenderLocation';
 import Weather from './components/Weather';
-import Movies from './components/Movies'
+import RenderMovies from './components/RenderMovies'
 import HandleError from './components/HandleError';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -103,7 +103,7 @@ export default function App() {
         apiKey={API_KEY}
       />
       <Weather location={location} forecast={forecast} />
-      <Movies movies={movies} location={location}/>
+      <RenderMovies movies={movies} location={location}/>
     </section>
   );
 }

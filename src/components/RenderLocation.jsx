@@ -1,7 +1,9 @@
+import Container from 'react-bootstrap/Container';
+
 export default function RenderLocation(props) {
   const { location, latitude, longitude, apiKey } = props;
   return (
-    <>
+    <Container>
       {location.display_name && latitude && longitude && (
         <div className="results">
           <h2>The city is: {location.display_name}</h2>
@@ -13,6 +15,6 @@ export default function RenderLocation(props) {
           />
         </div>
       )}
-    </>
+    </Container>
   );
 }

@@ -10,7 +10,7 @@ export default function Movie({
     imageUrl,
   }) {
     return (
-      <Card style={{ width: '25rem' }}>
+      <Card style={{ width: '25rem' }} className='mb-3'>
         <Card.Img variant='top' src={imageUrl} alt={title} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
