@@ -5,7 +5,7 @@ import Header from './components/Header';
 import CityForm from './components/CityForm';
 import RenderLocation from './components/RenderLocation';
 import Weather from './components/Weather';
-import RenderMovies from './components/RenderMovies'
+import RenderMovies from './components/RenderMovies';
 import HandleError from './components/HandleError';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,7 +19,9 @@ export default function App() {
   const [longitude, setLongitude] = useState('');
   const [error, setError] = useState(null);
   const [forecast, setForecast] = useState([]);
+  const [forecastFetch, setForecastFetch] = useState('');
   const [movies, setMovies] = useState([]);
+  const [moviesFetch, setMoviesFetch] = useState('');
 
   async function getLocation() {
     const locationAPI = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${searchQuery}&format=json`;
@@ -54,10 +56,16 @@ export default function App() {
       try {
         const movieAPIurl = `https://city-explorer-api-7n8z.onrender.com/movie?searchQuery=${searchQuery}`;
         const movieResponse = await axios.get(movieAPIurl);
-        setMovies(movieResponse.data);
-        console.log(movieResponse.data);
+
+        // Extract the movie array from the data property
+        const movieArray = movieResponse.data.data || [];
+
+        setMovies(movieArray);
+        setMoviesFetch(movieResponse.data.PTfetch);
+        console.log(movieArray);
+        console.log(movieResponse.data.PTfetch);
       } catch (error) {
-        console.log('Error fetching movie data:', error)
+        console.log('Error fetching movie data:', error);
       }
     }
   }
@@ -72,12 +80,14 @@ export default function App() {
   async function getWeather() {
     // Check if latitude and longitude are not empty before making the request
     if (latitude && longitude) {
-      
       try {
         const url = `${weatherAPI}/weather`;
-        const response = await axios.get(url, { params: { lat: latitude, lon: longitude} } );
-        setForecast(response.data);
-        console.log(response.data); // Log the data received from the API
+        const weatherResponse = await axios.get(url, {
+          params: { lat: latitude, lon: longitude },
+        });
+        setForecast(weatherResponse.data.data);
+        console.log(weatherResponse.data.data); // Log the data received from the API
+        setForecastFetch(weatherResponse.data.PTfetch);
       } catch (error) {
         // Handle errors if needed
         console.error('Error fetching weather data:', error);
@@ -102,8 +112,12 @@ export default function App() {
         longitude={longitude}
         apiKey={API_KEY}
       />
-      <Weather location={location} forecast={forecast} />
-      <RenderMovies movies={movies} location={location}/>
+      <Weather location={location} forecast={forecast} forecastFetch={forecastFetch}/>
+      <RenderMovies
+        movies={movies}
+        location={location}
+        moviesFetch={moviesFetch}
+      />
     </section>
   );
 }

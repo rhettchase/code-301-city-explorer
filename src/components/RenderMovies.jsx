@@ -2,11 +2,14 @@ import Movie from './Movie';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-export default function RenderMovies( {movies, location} ) {
+export default function RenderMovies( {movies, location, moviesFetch} ) {
   return (
     <div className='movies'>
     {movies.length > 0 && (
+      <div>
       <h2>Movies with {location.display_name} in the name:</h2>
+      {moviesFetch && <p>Last fetched in Pacific Time: {moviesFetch}</p>}
+      </div>
     )}
     <Row xs={1} md={1} lg={2} xl={3} className='g-4'>
       {movies.map((movie, index) => (
