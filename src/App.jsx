@@ -7,10 +7,12 @@ import RenderLocation from './components/RenderLocation';
 import Weather from './components/Weather';
 import RenderMovies from './components/RenderMovies';
 import HandleError from './components/HandleError';
+import RenderRestaurants from './components/RenderRestaurants';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 const API_KEY = import.meta.env.VITE_API_KEY;
 const weatherAPI = import.meta.env.VITE_API_URL;
+const yelpAPI = import.meta.env.VITE_API_URL;
 
 export default function App() {
   const [location, setLocation] = useState({ display_name: '' });
@@ -22,6 +24,8 @@ export default function App() {
   const [forecastFetch, setForecastFetch] = useState('');
   const [movies, setMovies] = useState([]);
   const [moviesFetch, setMoviesFetch] = useState('');
+  const [restaurants, setRestaurants] = useState([]);
+  const [restFetch, setRestFetch] = useState('');
 
   async function getLocation() {
     const locationAPI = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${searchQuery}&format=json`;
@@ -36,6 +40,7 @@ export default function App() {
       // Call getWeather after successfully fetching the location
       await getWeather();
       getMovies();
+      getFood();
     } catch (error) {
       if (error.response) {
         // The request was made, but the server responded with a status code outside the 2xx range
@@ -95,6 +100,24 @@ export default function App() {
       }
     }
   }
+
+  async function getFood() {
+    if (location) {
+      try {
+        const yelpAPIurl = `${yelpAPI}/yelp`;
+        const foodResponse = await axios.get(yelpAPIurl, {
+          params: { searchQuery: searchQuery },
+        });
+        setRestaurants(foodResponse.data.data);
+        console.log(foodResponse.data.data);
+        setRestFetch(foodResponse.data.PTfetch);
+      } catch (error) {
+        console.log('Error fetching restaurant data:', error);
+        setRestaurants([]);
+      }
+    }
+  }
+
   function updateQuery(event) {
     setSearchQuery(event.target.value);
   }
@@ -112,7 +135,12 @@ export default function App() {
         longitude={longitude}
         apiKey={API_KEY}
       />
-      <Weather location={location} forecast={forecast} forecastFetch={forecastFetch}/>
+      <Weather
+        location={location}
+        forecast={forecast}
+        forecastFetch={forecastFetch}
+      />
+      <RenderRestaurants restaurants={restaurants} restFetch={restFetch} location={location}/>
       <RenderMovies
         movies={movies}
         location={location}
