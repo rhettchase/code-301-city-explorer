@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from './components/Header';
 import CityForm from './components/CityForm';
@@ -7,6 +6,7 @@ import RenderLocation from './components/RenderLocation';
 import Weather from './components/Weather';
 import RenderMovies from './components/RenderMovies';
 import HandleError from './components/HandleError';
+import RenderMap from './components/RenderMap';
 import RenderRestaurants from './components/RenderRestaurants';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,6 +26,7 @@ export default function App() {
   const [moviesFetch, setMoviesFetch] = useState('');
   const [restaurants, setRestaurants] = useState([]);
   const [restFetch, setRestFetch] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   async function getLocation() {
     const locationAPI = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${searchQuery}&format=json`;
@@ -101,22 +102,26 @@ export default function App() {
     }
   }
 
-  async function getFood() {
-    if (location) {
-      try {
-        const yelpAPIurl = `${yelpAPI}/yelp`;
-        const foodResponse = await axios.get(yelpAPIurl, {
-          params: { searchQuery: searchQuery },
-        });
-        setRestaurants(foodResponse.data.data);
-        console.log(foodResponse.data.data);
-        setRestFetch(foodResponse.data.PTfetch);
-      } catch (error) {
-        console.log('Error fetching restaurant data:', error);
-        setRestaurants([]);
-      }
+// Set loading to true at the start of getFood()
+async function getFood() {
+  setIsLoading(true);
+  if (location) {
+    try {
+      const yelpAPIurl = `${yelpAPI}/yelp`;
+      const foodResponse = await axios.get(yelpAPIurl, {
+        params: { searchQuery: searchQuery },
+      });
+      setRestaurants(foodResponse.data.data);
+      console.log(foodResponse.data.data);
+      setRestFetch(foodResponse.data.PTfetch);
+    } catch (error) {
+      console.log('Error fetching restaurant data:', error);
+      setRestaurants([]);
     }
   }
+  // Set loading to false after fetching the data
+  setIsLoading(false);
+}
 
   function updateQuery(event) {
     setSearchQuery(event.target.value);
@@ -141,6 +146,9 @@ export default function App() {
         forecastFetch={forecastFetch}
       />
       <RenderRestaurants restaurants={restaurants} restFetch={restFetch} location={location}/>
+      {!isLoading && restaurants && latitude && longitude && 
+      <RenderMap latitude={latitude} longitude={longitude} restaurants={restaurants} apiKey={API_KEY}/>
+    }
       <RenderMovies
         movies={movies}
         location={location}

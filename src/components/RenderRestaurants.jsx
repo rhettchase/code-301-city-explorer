@@ -1,4 +1,5 @@
 import Restaurant from './Restaurant';
+import RenderMap from './RenderMap'; // Import the RenderMap component
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -9,8 +10,10 @@ export default function RenderRestaurants({ restaurants, location, restaurantsFe
         <div>
           <h2>Restaurants in {location.display_name}:</h2>
           {restaurantsFetch && <p>Last fetched in Pacific Time: {restaurantsFetch}</p>}
+          <RenderMap restaurants={restaurants} /> {/* Only render RenderMap when restaurants data is loaded */}
         </div>
       )}
+      {restaurants && restaurants.length > 0 && <RenderMap restaurants={restaurants} />} {/* Only render RenderMap when restaurants data is loaded */}
       <Row xs={1} md={2} lg={3} className='g-4'>
         {restaurants.map((restaurant, index) => (
           <Col key={index} className='mb-3'>
