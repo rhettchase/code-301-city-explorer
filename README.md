@@ -2,12 +2,12 @@
 
 **Author**: Rhett Chase
 
-**Version**: 2.0.0
+**Version**: 2.1.0
 <!-- (increment the patch/fix version number if you make more commits past your first submission) -->
 
 ## Overview
 
-The City Explorer application uses a form to capture user input of `city` to return the city's latitude, longitude, a map of the city, the city's forecast, and movies that contain the city's name. The app also shares information on any error if the application is unable to render a result. The user can use this message if something goes wrong so they know they need to make any changes or try again in a different manner.
+The City Explorer application uses a form to capture user input of `city` to return the city's latitude, longitude, a map of the city, the city's forecast, restaurants, and movies that contain the city's name. The app includes a dynamic map that plots the top restaurants in the city. The app also shares information on any error if the application is unable to render a result. The user can use this message if something goes wrong so they know they need to make any changes or try again in a different manner.
 
 ![Data Flow](src/assets/data-flow.png)
 [Deployed Site](https://city-explorer-rhett.netlify.app)
@@ -33,6 +33,7 @@ The deployed site will run "as is" with no need to install additional dependenci
 - Javascript
 - CSS
 - HTML
+- Leaflet
 
 ## Change Log
 <!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
@@ -42,14 +43,16 @@ The deployed site will run "as is" with no need to install additional dependenci
 - 12-04-2023 9:36pm - The application now features a fully operational React.js frontend, integrating with the LocationIQ API to retrieve location data. A specific functionality has been implemented to handle requests for the 'location' resource and renders latitude, longitude and map based on a city input
 - 12-05-2023 10:00pm - The application now pulls from a locally hosted **weather api** to pull static weather forecast data. A specific functionality has been implemented to handle requests for the 'weather' resource and renders weather forecast based on a city input
 - 12-07-2023 Application has been refactored to componentize the front-end codebase. The UI has been updated to use Bootstrap Cards for the weather forecast and movie results.
+- 12-10-2023 8:48pm - The application now renders the top restaurants for the city on a dynamic map. It also displays the details on cards (name, description, type of food, ratings, etc.) for each restaurant below the map.
 
 ## Credit and Collaborations
 
 - chatGPT
 - React Dev Docs
-- WeatherBit API
-- LocationIQ API (back-end)
+- LocationIQ API (front-end)
+- WeatherBit API (back-end)
 - MovieDB API (back-end)
+- Yelp API (back-end)
 - Nelify (for hosting deployed site)
 
 ## Time Estimate Lab-06
