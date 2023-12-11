@@ -1,19 +1,26 @@
 import Restaurant from './Restaurant';
-import RenderMap from './RenderMap'; // Import the RenderMap component
+import RenderMap from './RenderMap'; 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 
-export default function RenderRestaurants({ restaurants, location, restaurantsFetch }) {
+export default function RenderRestaurants({ restaurants, location, restaurantsFetch, apiKey }) {
   return (
+    <Container>
     <div className='restaurants'>
       {restaurants.length > 0 && (
         <div>
           <h2>Restaurants in {location.display_name}:</h2>
           {restaurantsFetch && <p>Last fetched in Pacific Time: {restaurantsFetch}</p>}
-          <RenderMap restaurants={restaurants} /> {/* Only render RenderMap when restaurants data is loaded */}
+          {restaurants &&
+            <RenderMap
+              restaurants={restaurants}
+              apiKey={apiKey}
+            />
+          }
         </div>
       )}
-      {restaurants && restaurants.length > 0 && <RenderMap restaurants={restaurants} />} {/* Only render RenderMap when restaurants data is loaded */}
+
       <Row xs={1} md={2} lg={3} className='g-4'>
         {restaurants.map((restaurant, index) => (
           <Col key={index} className='mb-3'>
@@ -30,5 +37,6 @@ export default function RenderRestaurants({ restaurants, location, restaurantsFe
         ))}
       </Row>
     </div>
+    </Container>
   );
 }
